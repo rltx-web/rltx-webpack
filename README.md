@@ -94,3 +94,39 @@ plugins: [
 npm run dev orgId
 ```
 来启动项目了。
+
+
+## jsZip
+
+我们这里在`build done`之后会调用方法来进行文件压缩，我们在`zip/zipConfig.js`进行配置
+```js
+module.exports = {
+  outPath:'./zipFile/', // 输出目录
+  config: [
+    {
+      name : 'out', //压缩之后的压缩包名称
+      file : [
+        {
+          fileName: 'index.html', // 压缩包内的文件名称
+          filePath: './dist/index.html' // 文件路径
+        },
+        {
+          fileName: 'app.js', // 压缩包内的文件名称
+          filePath: './dist/static/js/app.js' // 文件路径
+        },
+        {
+          fileName: 'vendor.js', // 压缩包内的文件名称
+          filePath: './dist/static/js/vendor.js' // 文件路径
+        },
+        {
+          fileName: 'manifest.js', // 压缩包内的文件名称
+          filePath: './dist/static/js/manifest.js' // 文件路径
+        },{
+          fileName: 'app.css', // 压缩包内的文件名称
+          filePath: './dist/static/css/app.css' // 文件路径
+        }
+      ],
+    }
+  ]
+};
+```
