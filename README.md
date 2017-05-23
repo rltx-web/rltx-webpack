@@ -12,14 +12,14 @@ npm install
 
 ```
 "scripts": {
-    "dev": "node build/dev-server.js",
-    "start": "node build/dev-server.js",
-    "build": "node build/build.js",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
-  }
+  "dev": "node build/dev-server.js",
+  "start": "node build/dev-server.js",
+  "build": "node build/build.js",
+  "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
+  "e2e": "node test/e2e/runner.js",
+  "test": "npm run unit && npm run e2e",
+  "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
+}
 ```
 
 ### 如何运行指令
@@ -57,39 +57,39 @@ eg，我们需要建立一个`app.html`的页面，然后入口js文件是`main.
 // 在entry添加对应的配置
 
 entry: {
-    app: './src/main.js'
+  app: './src/main.js'
 }
 
 // build/webpack.dev.conf.js
 // 在plugins添加对应的配置
 plugins: [
-    new HtmlWebpackPlugin({
-        filename: 'app.html',
-        template: 'app.html',
-        chunks: ['app'],
-        inject: true
-    })
+  new HtmlWebpackPlugin({
+    filename: 'app.html',
+    template: 'app.html',
+    chunks: ['app'],
+    inject: true
+  })
 ]
 
 // build/webpack.prod.conf.js
 // 在plugins添加对应的配置
 plugins: [
-    new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'testing'
-        ? 'app.html'
-        : config.build.app,
-      template: 'app.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-      },
-      chunksSortMode: 'dependency'
-    })
+  new HtmlWebpackPlugin({
+    filename: process.env.NODE_ENV === 'testing'
+      ? 'app.html'
+      : config.build.app,
+    template: 'app.html',
+    inject: true,
+    minify: {
+      removeComments: true,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true
+    },
+    chunksSortMode: 'dependency'
+  })
 ]
 
-// config/index
+// config/index.js
 // 在build添加对应的配置
 module.exports = {
   build: {
@@ -138,4 +138,18 @@ module.exports = {
     }
   ]
 };
+```
+
+## webpack
+
+建议开启`stats`和关闭`quite`，这样便于查看在build过程中产生的错误：
+```js
+// build/dev-server.js
+// 在build添加对应的配置
+var devMiddleware = require('webpack-dev-middleware')(compiler, {
+  publicPath: webpackConfig.output.publicPath,
+  quiet: false,
+  progress: true,
+  stats: "errors-only"
+});
 ```
