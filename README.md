@@ -53,14 +53,14 @@ npm run dev 551 // 运行开发环境，获得的是orgId为551的组织的数�
 eg，我们需要建立一个`app.html`的页面，然后入口js文件是`main.js`，接下来我们进行配置
 
 ```js
-// webpack.base.conf.js
+// build/webpack.base.conf.js
 // 在entry添加对应的配置
 
 entry: {
     app: './src/main.js'
 }
 
-// webpack.dev.conf.js
+// build/webpack.dev.conf.js
 // 在plugins添加对应的配置
 plugins: [
     new HtmlWebpackPlugin({
@@ -71,7 +71,7 @@ plugins: [
     })
 ]
 
-// webpack.prod.conf.js
+// build/webpack.prod.conf.js
 // 在plugins添加对应的配置
 plugins: [
     new HtmlWebpackPlugin({
@@ -88,6 +88,15 @@ plugins: [
       chunksSortMode: 'dependency'
     })
 ]
+
+// config/index
+// 在build添加对应的配置
+module.exports = {
+  build: {
+    env: require('./prod.env'),
+    app: path.resolve(__dirname, '../dist/app.html')
+  }
+}
 ```
 然后我们就可以运行
 ```
