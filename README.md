@@ -1,5 +1,5 @@
 ## 项目依赖库
-[vue](https://github.com/vuejs/vue)，[es6](https://github.com/babel/babel)，[eslint](https://github.com/eslint/eslint)，[axios](https://github.com/mzabriskie/axios)，[webpack](https://github.com/webpack/webpack)，[express](https://github.com/expressjs/express)，[jszip](https://github.com/Stuk/jszip)
+[vue](https://github.com/vuejs/vue)，[es6](https://github.com/babel/babel)，[eslint](https://github.com/eslint/eslint)，[axios](https://github.com/mzabriskie/axios)，[webpack](https://github.com/webpack/webpack)，[express](https://github.com/expressjs/express)，[jszip](https://github.com/Stuk/jszip)，[element](https://github.com/ElemeFE/element)
 ## 项目安装
 
 ```
@@ -57,7 +57,7 @@ eg，我们需要建立一个`app.html`的页面，然后入口js文件是`main.
 // 在entry添加对应的配置
 
 entry: {
-  app: './src/main.js'
+  'app/app': './src/main.js'
 }
 
 // build/webpack.dev.conf.js
@@ -66,7 +66,7 @@ plugins: [
   new HtmlWebpackPlugin({
     filename: 'app.html',
     template: 'app.html',
-    chunks: ['app'],
+    chunks: ['app/app'], // 和entry保持一致
     inject: true
   })
 ]
@@ -85,7 +85,7 @@ plugins: [
       collapseWhitespace: true,
       removeAttributeQuotes: true
     },
-    chunksSortMode: 'dependency'
+    chunks: ['app/app', 'vendor', 'manifest'] // 和entry保持一致,这里要写清楚依赖关系
   })
 ]
 
@@ -113,26 +113,26 @@ module.exports = {
   outPath:'./zipFile/', // 输出目录
   config: [
     {
-      name : 'out', //压缩之后的压缩包名称
+      name : 'app',
       file : [
         {
-          fileName: 'index.html', // 压缩包内的文件名称
-          filePath: './dist/index.html' // 文件路径
+          fileName: 'app.html',
+          filePath: './dist/app.html'
         },
         {
-          fileName: 'app.js', // 压缩包内的文件名称
-          filePath: './dist/static/js/app.js' // 文件路径
+          fileName: 'app.js',
+          filePath: './dist/static/js/app/app.js'
         },
         {
-          fileName: 'vendor.js', // 压缩包内的文件名称
-          filePath: './dist/static/js/vendor.js' // 文件路径
+          fileName: 'vendor.js',
+          filePath: './dist/static/js/vendor.js'
         },
         {
-          fileName: 'manifest.js', // 压缩包内的文件名称
-          filePath: './dist/static/js/manifest.js' // 文件路径
+          fileName: 'manifest.js',
+          filePath: './dist/static/js/manifest.js'
         },{
-          fileName: 'app.css', // 压缩包内的文件名称
-          filePath: './dist/static/css/app.css' // 文件路径
+          fileName: 'app.css',
+          filePath: './dist/static/css/app/app.css'
         }
       ],
     }
@@ -148,7 +148,7 @@ module.exports = {
 // 在build添加对应的配置
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
-  quiet: false,
+  quiet: true,
   progress: true,
   stats: "errors-only"
 });
