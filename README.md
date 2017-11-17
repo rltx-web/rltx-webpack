@@ -49,6 +49,7 @@ npm run build dev // 生成文件
 + src // 开发代码目录
  - components // 组件文件夹
 + api // api controllers
++ template //静态模版的存放目录
 ```
 
 ### 开发流程
