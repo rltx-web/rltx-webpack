@@ -73,15 +73,15 @@ const configList = {
 
 ## 渲染机智
 
-1. config， 获取对应配置
+1. config， 获取对应配置，拿到对应的`elementCode`去`define`接口找`elementInfoCodes`
 
 - `search_render_info`， 搜索字段配置
 - `list_render_info`，列表字段配置
 - `detail_render_info`， 详情字段配置
 
-2. define， 获取对应定义, `element_type/define`
+2. define， 获取对应定义, `element_type/define`, 拿到对应的`elementInfoCodes`去`info`接口找`controllType`
 
-3. info， 获取对应信息, `element_type/info`
+3. info， 获取对应信息, `element_type/info`, 根据`controllType`去匹配组件类型
 
 ### 合并结构数据，返回结构化数据
 
